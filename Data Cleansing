@@ -1,0 +1,77 @@
+--Getting the contents in the table
+
+SELECT * FROM nashville_housing;
+
+--Standardizing the Date format
+
+SELECT saledate FROM nashville_housing;
+
+--Populating the property address
+
+SELECT * FROM nashville_housing
+WHERE propertyaddress IS NULL
+ORDER BY parcelid;
+
+SELECT propertyaddress FROM nashville_housing
+WHERE propertyaddress IS NULL;
+
+SELECT a.parcelid, a.propertyaddress, b.parcelid, b.propertyaddress, IS NULL (a.propertyaddress, b.propertyaddress),
+FROM nashville_housing a 
+JOIN nashville_housing b
+        ON a.parcelid = b.parcelid
+ WHERE a.propertyaddress IS NULL;
+ 
+ UPDATE nashville_housing,
+ SET Propertyaddress = IS NULL (a.propertyaddress, b.propertyaddress)
+ FROM nashville_housing a 
+JOIN nashville_housing b
+        ON a.parcelid = b.parcelid
+WHERE a.propertyaddress IS NULL;    
+
+--Breaking the address into columns
+
+SELECT propertyaddress FROM nashville_housing;
+--WHERE propertyaddress IS NULL
+--ORDER BY parcelid;
+
+--Changing Y and N to No adn Yes in SoldAsVacant column
+
+SELECT DISTINCT (soldasvacant), COUNT (Soldasvacant)
+FROM nashville_housing
+GROUP BY soldasvacant
+ORDER BY 2;
+
+SELECT soldasvacant 
+CASE soldasvacant;
+WHEN soldasvacant = 'Y' THEN 'Yes'
+     WHEN soldasvacant = 'N' THEN 'No',
+     ELSE soldasvacant
+FROM nashville_housing
+END
+
+
+--Removing Duplicates
+
+WITH row_duplicates AS (
+SELECT *
+              ROW NUMBER, 
+              OVER (PARTITION BY 
+              parcelid, propertyaddress, saleprice, saledate, legalreference
+              ORDER BY unique_id
+   FROM nashville_housing
+   ORDER BY parcelid;
+FROM nashville_housing
+)
+
+DELETE FROM row_duplicates
+WHERE row_num = 1
+
+--Removing Unused COlumns
+
+SELECT * FROM nashville_housing
+
+ALTER TABLE nashville_housing
+DROP COLUMN owneraddress, taxdistrict, propertyaddress
+
+ALTER TABLE nashville_housing 
+DROP COLUMN saledate;
