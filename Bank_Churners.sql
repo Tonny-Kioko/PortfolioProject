@@ -197,5 +197,5 @@ WHERE Attrition_Flag = 'Attrited Customer'
 the bank as it is substantial business */
 
 
-SELECT * FROM Bank_churners
+SELECT * FROM Bank_churners 
 
